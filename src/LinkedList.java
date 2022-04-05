@@ -1,3 +1,4 @@
+package src;
 public class LinkedList<T>{
   private T data;
   private LinkedList<T> prevNode, nextNode;

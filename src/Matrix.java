@@ -1,3 +1,4 @@
+package src;
 // matrix class is used to store and format the output of a matrix
 public class Matrix {
     private final int[][] matrix;

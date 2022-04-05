@@ -1,3 +1,4 @@
+package src;
 //Importing everything
 import java.time.Duration;
 import java.time.Instant;
