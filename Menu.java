@@ -3,6 +3,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import src.Calculator;
+import src.IntByReference;
+import src.Matrix;
+import src.QueueTester;
+
 // Starting our menu class
 public class Menu {
     
