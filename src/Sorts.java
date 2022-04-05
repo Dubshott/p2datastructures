@@ -5,76 +5,57 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-// Start by creating the sorting class
 public class Sorts {
-    // Start by creating the array list which will hold integers within
-    private final ArrayLisst<Integer> data = new ArrayList<>();
-    // Creating our variable that controls the time
-    private final Duration otime;
+    private final ArrayList<Integer> data = new ArrayList<>();
+    private final Duration timeElapsed;
 
-    // Create a new class called Sorts which will start the process
-    // Taking in 2 new variables called size and sort
-    public Sorts(int size, String pick) {
-        Instant start = Instant.now();
-        
-        // builds the array
+    public Sorts(int size) {
+        Instant start = Instant.now();  // time capture -- start
+        // build an array
         for (int i = 0; i < size; i++) {
             data.add((int)(Math.random() * (size+1)));
         }
-
-        // Create a sorting to choose bewteen the sorting methods
-        switch (pick) {
-            case "bubble" -> bubbleSort(data);
-            case "insert" -> insertSort(data);
-            case "merge" -> mergeSort(data);
-        }
-
-        // Checks the times
+        // use Inheritance and Polymorphism to replace data.sort with your own algorithm
+        data.sort(Comparator.naturalOrder());
         Instant end = Instant.now();    // time capture -- end
-        this.otime = Duration.between(start, end);
+        this.timeElapsed = Duration.between(start, end);
     }
 
-    // Start creating getters 
     public ArrayList<Integer> getData() {
         return data;
     }
 
-    public int getOtime() {
-        return otime.getNano();
+    public int getTimeElapsed() {
+        return timeElapsed.getNano();
     }
 
 
-    // now on our main classes to run the entire program
     public static void main(String[] args) {
-        int sizes = 5000,  times = 10, time = 0, sum = 0;
-        String[] options = {"insert", "merge", "bubble"};
+        int sum=0, time=0, TIMES=12, SIZE=5000;
 
-        // Starting the string outputting
-        for (String option : options) {
-            System.out.println("sorting type: " + option);
-            
-            // Now we are going through the multiple times
-            for (int i = 0; i < times; i++) {
-                Sorts s = new Sorts(sizes, option);
-                for (int j = 0; j < s.getData().size(); j++) {
-                    sum += s.getData().get(j);
-                }
-                System.out.println("AVG: " + sum / ((i + 1) * sizes));
-                System.out.println("ns: " + s.getTimeElapsed());
-                time += s.getTimeElapsed();
+        for(int i=0; i< TIMES; i++) {
+            Sorts s = new Sorts(SIZE);
+            for(int j = 0; j<s.getData().size(); j++) {
+                // To see data, uncomment next line
+                // System.out.println(s.getData());
+                sum += s.getData().get(j);
             }
-
-            // printing out our times 
-            System.out.println("AVG: " + sum / (times * sizes));
-            System.out.println("Total Nanoseconds: " + time);
-            System.out.println("Total Seconds: " + time / 1000000000.0);
+            System.out.println("Average random: " + sum / ((i+1)*SIZE));
+            System.out.println("Nanoseconds: " + s.getTimeElapsed());
+            time += s.getTimeElapsed();
         }
+        System.out.println("Average random: " + sum / (TIMES*SIZE));
+        System.out.println("Total Nanoseconds: " + time );
+        System.out.println("Total Seconds: " + time /1000000000.0);
     }
+
+}
+    
+        
 
     // inserting the bubble sorting method
     public static void bubbleSort(ArrayList<Integer> array) {
-        for (int x = 0; x < array.size(); x++) {
-            for (int y = 0; y < array.size() - 1; y++) {
+        for (int x = 0; x < array.size(); x+) {
                 if (array.get(y) > array.get(y + 1)) {
                     int temporary = array.get(y);
                     array.set(y, array.get(y + 1));
@@ -82,37 +63,21 @@ public class Sorts {
                 }
             }
         }
-    }
 
-    // Creating the inserting sorting method
-    public static void insertSort(ArrayList<Integer> array) {
+        // Insertion sort 
+public static void insertSort(ArrayList<Integer> array) {
         int n = array.size();
         for (int i = 1; i < n; ++i) {
             int key = array.get(i);
             int j = i - 1;
             while (j >= 0 && array.get(j) > key) {
                 array.set(j + 1, array.get(j));
-                j = j - 1;
+                j = j - 2;
             }
-            array.set(j + 1, key);
+            
         }
 
     }
 
-    // 
-    public static void mergeSort(ArrayList<Integer> array) {
-        int n = array.size();
-        if (n < 2)
-            return;
-        ArrayList<Integer> left = new ArrayList<Integer>();
-        ArrayList<Integer> right = new ArrayList<Integer>();
-        for (int i = 0; i < n / 2; i++) {
-            left.add(array.get(i));
-        }
-        for (int i = n / 2; i < n; i++) {
-            right.add(array.get(i));
-        }
-        mergeSort(left);
-        mergeSort(right);
-        merge(left, right, array);
-    }
+   
+    
